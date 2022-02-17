@@ -1,0 +1,63 @@
+push    rbp
+push    rcx
+push    r9
+movzx   r9, bp
+push    r13
+movsxd  r9, r11d
+movsx   r9w, bl
+xchg    r9b, r9b
+push    r14
+movzx   r9w, spl
+cmovno  r9d, r9d
+movsx   r9d, dx
+push    rdi
+setz    r9b
+movsx   edi, di
+push    r8
+movsx   r9, r10w
+movzx   r9, di
+mov     ax, ss
+pushfq
+or      dword ptr [rsp], 100h
+popfq
+and     eax, 0FFFFFEFFh
+wrmsr
+pushfq
+mov     ss, ax
+icebp
+rdmsr
+pushfq
+push	r10
+and     dword ptr [rsp], 0FFFFFEFFh
+popfq
+push    rdx
+push    rax
+push    r15
+push    rsi
+mov     ecx, 0C0000084h
+or      dword ptr [rsp], 100h
+popfq
+syscall
+mov     r10, rcx
+mov     ecx, 0C0000084h
+pop     rax
+pop     rdx
+push    r12
+push    rbx
+wrmsr
+mov     rax, r10
+xor 	eax, eax
+inc 	eax
+ror     r9d, 1
+not     r9d
+rol     r9d, 1
+xor     r9d, 529C0010h
+push    r10
+add     r10, rbx
+bswap   r10w
+xor     [rsp+210h+var_210], r9d
+shld    r10, r9, 0B4h
+rcl     r10, cl
+bsf     r10, rbp
+pop     r10
+jmp     loc_14033A00E
